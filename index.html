@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Favorite Person ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #ffdae9;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* Floating Hearts Animation */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff4d94;
+            animation: float 4s linear infinite;
+            opacity: 0.8;
+            font-size: 20px;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(110vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+            border: 6px dashed #ff85b3;
+            width: 85%;
+            max-width: 500px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .page { display: none; }
+        .active { display: block; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h1 { color: #d63384; line-height: 1.4; font-size: 1.6rem; }
+
+        .btn-yes {
+            background: #ff4d94;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 77, 148, 0.4);
+        }
+
+        #no-btn {
+            position: absolute;
+            background: #ffa3c2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .letter-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            text-align: left;
+            background: #fffafa;
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        @media (min-width: 600px) {
+            .letter-content { flex-direction: row; }
+        }
+
+        .para-text {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        #display-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 3px solid #ff4d94;
+            display: none;
+        }
+
+        .next-btn {
+            margin-top: 20px;
+            background: #ff85b3;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="hearts-container" id="hearts"></div>
+
+<div class="container">
+    <div id="page1" class="page active">
+        <h1>Will you be my valentine? 👉🏻👈🏻</h1>
+        <button class="btn-yes" onclick="nextPage(2)">Yes 💗</button>
+        <button id="no-btn" onmouseover="moveNo()" onclick="moveNo()">No 🙂‍↔️</button>
+    </div>
+
+    <div id="page2" class="page">
+        <h1>Naku telsu neeku intrest undhi anii 🫣</h1>
+        <button class="next-btn" onclick="nextPage(3)">Next ➡️</button>
+    </div>
+
+    <div id="page3" class="page">
+        <div id="closed-letter" onclick="openLetter()" style="cursor:pointer;">
+            <div style="font-size: 100px;">💌</div>
+            <p><strong>Click the letter to open!</strong></p>
+        </div>
+        
+        <div id="open-letter" style="display:none;">
+            <div class="letter-content">
+                <div class="para-text">Bavaaaaaaaaaaa.......
+                    Happyyy happyy happyyy Velentine's day to you <strong>"The love of my life"</strong> 🥹💗<br><br>
+                    This is the 1st valentine's day of ours together 🫣<br><br>
+                    I wish and hope for more and more valentine's days for us together 🫂<br><br>
+                    Thank you for being my first love 😍 and please be my last love too 🤌🏻😚
+                </div>
+                <div>
+                   <div class="image-column">
+    <img id="display-img" 
+         src="https://drive.google.com/uc?export=view&id=15H145NTFoDlIkHWALQwbBiHi2ajGDlRk"
+         alt="Our Memory" 
+         style="display: block; width: 150px; height: 150px; object-fit: cover; border-radius: 10px; border: 3px solid #ff4d94;">
+</div>
+                </div>
+            </div>
+            <button class="next-btn" onclick="nextPage(4)">Next ➡️</button>
+        </div>
+    </div>
+
+    <div id="page4" class="page">
+        <h1>Love you so so so muchhh</h1>
+        <div style="font-size: 50px;">🌝🥰💖🌹✨</div>
+    </div>
+</div>
+
+<script>
+    // Create floating hearts
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.innerHTML = '💗';
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+        document.getElementById('hearts').appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+    }
+    setInterval(createHeart, 400);
+
+    // Page navigation
+    function nextPage(pageNum) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('page' + pageNum).classList.add('active');
+    }
+
+    // Dodging No button
+    function moveNo() {
+        const btn = document.getElementById('no-btn');
+        const x = Math.random() * (window.innerWidth - btn.offsetWidth - 20);
+        const y = Math.random() * (window.innerHeight - btn.offsetHeight - 20);
+        btn.style.left = x + 'px';
+        btn.style.top = y + 'px';
+    }
+
+    // Letter logic
+    function openLetter() {
+        document.getElementById('closed-letter').style.display = 'none';
+        document.getElementById('open-letter').style.display = 'block';
+    }
+
+    // Image upload logic
+    function handleImage(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const img = document.getElementById('display-img');
+            img.src = reader.result;
+            img.style.display = 'block';
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+
+</body>
+</html>
